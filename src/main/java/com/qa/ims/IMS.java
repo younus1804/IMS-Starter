@@ -6,7 +6,11 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.controller.Action;
 import com.qa.ims.controller.CrudController;
 import com.qa.ims.controller.CustomerController;
+import com.qa.ims.controller.ItemController;
+import com.qa.ims.controller.OrderController;
 import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
@@ -16,14 +20,20 @@ public class IMS {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private final CustomerController customers;
+	private final ItemController item;
+	private final OrderController order;
 	private final Utils utils;
 
 	public IMS() {
 		this.utils = new Utils();
 		final CustomerDAO custDAO = new CustomerDAO();
 		this.customers = new CustomerController(custDAO, utils);
+		final ItemDAO itDAO = new ItemDAO();
+		this.item = new ItemController(itDAO, utils);
+		final OrderDAO orDAO = new OrderDAO();
+		this.order = new OrderController(orDAO, utils);
+		
 	}
-
 	public void imsSystem() {
 		LOGGER.info("Welcome to the Inventory Management System!");
 		DBUtils.connect();
@@ -50,17 +60,17 @@ public class IMS {
 				active = this.customers;
 				break;
 			case ITEM:
+				active = this.item;
 				break;
 			case ORDER:
+				active = this.order;
 				break;
 			case STOP:
 				return;
 			default:
 				break;
 			}
-
 			LOGGER.info(() ->"What would you like to do with " + domain.name().toLowerCase() + ":");
-
 			Action.printActions();
 			Action action = Action.getAction(utils);
 
@@ -71,7 +81,6 @@ public class IMS {
 			}
 		} while (!changeDomain);
 	}
-
 	public void doAction(CrudController<?> crudController, Action action) {
 		switch (action) {
 		case CREATE:
@@ -92,5 +101,4 @@ public class IMS {
 			break;
 		}
 	}
-
 }
