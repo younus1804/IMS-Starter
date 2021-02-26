@@ -50,7 +50,7 @@ public class OrderController implements CrudController<Order> {
 		String order_item = utils.getString();
 		LOGGER.info("Please enter the items quantity");
 		Long item_quantity = utils.getLong();
-		Order order = orderDAO.create(new Order(order_id, order_item, item_quantity));
+		Order order = orderDAO.update(new Order(order_id, order_item, item_quantity));
 		LOGGER.info("Order Updated");
 		return order;
 	}

@@ -30,6 +30,8 @@ public class Order {
 		this.setitem_quantity(item_quantity);
 		this.setorder_id(order_id);
 	}
+	public Order() {
+	}
 	public void setitem_quantity(Long item_quantity) {
 		this.item_quantity = item_quantity;
 		

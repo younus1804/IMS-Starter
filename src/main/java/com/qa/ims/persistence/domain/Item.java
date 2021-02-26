@@ -16,6 +16,8 @@ public class Item {
 		this.setitem_price(item_price);
 
 	}
+	public Item() {
+	}
 	public Long getitem_id() {
 		return item_id;
 	}

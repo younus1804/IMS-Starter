@@ -56,4 +56,34 @@ public class CustomerDAOTest {
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
 	}
-}
+	public void cexceptiondelete() {
+		DBUtils.connect("db.url=jdbc:h2:~/cdel");
+		Customer created = new Customer(2L, "chris", "perrins");
+		DAO.create(created);
+		assertEquals(0, DAO.delete((created.getId())));
+	}
+	@Test
+	public void cexceptionupdate() {
+		DBUtils.connect("db.url=jdbc:h2:~/cupd");
+		Customer updated = new Customer(2L, "chris", "perrins");
+		assertEquals(updated, DAO.update(updated));
+	}
+	@Test
+	public void cexceptionread() {
+		DBUtils.connect("db.url=jdbc:h2:~/cread");
+		Customer created = new Customer(2L, "chris", "perrins");
+		assertEquals(created, DAO.read(created.getId()));
+		}
+	@Test
+	public void cexceptionreadlat() {
+		DBUtils.connect("db.url=jdbc:h2:~/creadl");
+		Customer created = new Customer(2L, "chris", "perrins");
+		assertEquals(created, DAO.readLatest());
+		}
+	@Test
+	public void cexceptionreadall() {
+		DBUtils.connect("db.url=jdbc:h2:~/creada");
+		Customer created = new Customer(2L, "chris", "perrins");
+		assertEquals(created, DAO.readAll());
+		}
+	}
